@@ -1,12 +1,18 @@
-<ion-view view-title="Likes">
+<ion-view view-title="Performers liked">
   <ion-content>
+ 
     <ion-list>
-      <ion-item ng-repeat="like in likes"
-                href="#/tab/likes/{{like.id}}">
-        <h3>{{like.id}}</h3>
-        <h2>{{like.like_link_id}}</h2>
-        <p>{{like.like_link_type}}</p>
+      <ion-item ng-repeat="performer in performersLike"
+                href="#/lien ferdi vue profil performer">
+
+        <h3>{{performer.name}}</h3>
+        <h2>{{performer.category!=null ? ("Catégorie : " + performer.category) : ""}}</h2>
+        <p>Genre : {{performer.genre}}</p> 
+        <p>Description : {{performer.description}}</p>
+        <p>Website : {{performer.url}}</p>
+
        </ion-item>
+       <!-- <ion-infinite-scroll on-infinite="addItems()"></ion-infinite-scroll>  -->
     </ion-list>
   </ion-content>
 </ion-view>

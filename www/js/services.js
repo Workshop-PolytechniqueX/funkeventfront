@@ -1,15 +1,18 @@
-var APIAccessModule = angular.module('starter.services', ['ngResource'])
+angular.module('starter.services', ['ngResource'])
 
 
-APIAccessModule.factory('Likes', function ($resource) {
-    return $resource('http://funkevent.herokuapp.com/likes/:likeId.json');
-});
+.factory('Likes', function ($resource) {
+    return $resource('http://funkevent.herokuapp.com/likes/:likeId.json',
+     {'query':  {method:'GET', isArray:false}});
+})
 
-APIAccessModule.factory('Places', function ($resource) {
+.factory('Places', function ($resource) {
     return $resource('http://funkevent.herokuapp.com/places/:placeId.json');
-});
+})
 
-APIAccessModule.factory('Performers', function ($resource) {
+.factory('Performers', function ($resource) {
     return $resource('http://funkevent.herokuapp.com/performers/:performerId.json');
-});
+})
+
+
 

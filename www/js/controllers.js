@@ -9,23 +9,43 @@ angular.module('starter.controllers', ['starter.services'])
   };
 })
 
-.controller('LikesCtrl', function($scope, Likes, Performers, Places) {
-    $scope.likes = Likes.query();
-    /* this.result = [];
+.controller('LikesCtrl', ['$scope','Likes','Performers','Places',
+  function($scope, Likes, Performers, Places) {
+  
+    
+    $scope.performersLike = [];
+    $scope.placesLike = [];
 
-    for( like in array){
+    /* Promise, pour attendre le resultat de la Likes.query() avant de faire autre chose! */
+    Likes.query().$promise.then(function (result) { //result est le tableau contenant les likes de l'utilisateur
+
+  
+    angular.forEach(result, function(like) { //pour chaque like, on GET le lieu ou la place associé
+    
       if(like.like_link_type="performer"){
-        this.result.push(Performers.get({performerId: like.like_link_id}));
+        $scope.performersLike.push(Performers.get({performerId: like.like_link_id}) );
       }
       else if(like.like_link_type="place"){
-        this.result.push(Places.get({placeId: like.like_link_id}));
+        $scope.placesLike.push(Places.get({placeId: like.like_link_id}));
       }
+    });
+
+  });
+}])
+
+/* INFINITE SCROLL
+var currentStart = 0
+
+$scope.addItems = function() {
+    for (var i = currentStart; i < currentStart+20; i++) {
+      $scope.items.push("Item " + i)
     }
-    console.log(this.result);
-    
-    $scope.likes=array;
-    return $scope.likes; */
-})
+    currentStart += 20
+    $scope.$broadcast('scroll.infiniteScrollComplete')
+  }
+*/
+  
+
 
 .controller('LikeCtrl', function($scope, $stateParams, Likes) {
     $scope.like = Likes.get({likeId: $stateParams.likeId});
