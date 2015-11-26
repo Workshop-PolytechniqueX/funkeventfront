@@ -81,6 +81,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
   }
 })
+  .state('tab.likes.performers', {
+  url: '/performers',
+  views: {
+      'tab-likes-performers': {
+          templateUrl: "templates/tab-likes-performers.html",
+          controller: 'LikesCtrl'
+      }
+  }
+})
+  .state('tab.likes.places', {
+  url: '/places',
+  views: {
+      'tab-likes-places': {
+          templateUrl: "templates/tab-likes-places.html",
+          controller: 'LikesCtrl'
+      }
+  }
+})
   .state('tab.like', {
   url: "/likes/:likeId",
   views: {

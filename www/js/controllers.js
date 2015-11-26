@@ -19,13 +19,14 @@ angular.module('starter.controllers', ['starter.services'])
 
   
     angular.forEach(result, function(like) { //pour chaque like, on GET le lieu ou la place associé
-    
-      if(like.like_link_type="performer"){
+      
+      if(like.like_link_type=="performer"){
         $scope.performersLike.push(Performers.get({performerId: like.like_link_id}) );
       }
-      else if(like.like_link_type="place"){
-        $scope.placesLike.push(Places.get({placeId: like.like_link_id}));
+      else if(like.like_link_type=="place"){
+        $scope.placesLike.push(Places.get({placeId: like.like_link_id}) );
       }
+
     });
 
   });
