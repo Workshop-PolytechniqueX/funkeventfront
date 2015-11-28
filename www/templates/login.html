@@ -1,0 +1,23 @@
+<ion-view view-title="Login" name="login-view">
+  <ion-content>
+
+
+  <div class="col-md-6 col-md-offset-3">
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Email</span>
+        <input type="email" placeholder="Email" ng-model="data.email">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Password</span>
+        <input type="password" placeholder="Password" ng-model="data.password">
+      </label>
+    </div>
+
+    <div class="padding">
+      <button class="button button-block button-calm" ng-click="login()">Login</button>
+    </div>
+  </div>
+
+  </ion-content>
+</ion-view>

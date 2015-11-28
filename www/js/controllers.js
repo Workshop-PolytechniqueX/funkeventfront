@@ -1,11 +1,47 @@
-angular.module('starter.controllers', ['starter.services'])
+angular.module('starter.controllers', ['starter.services', 'Devise'])
 
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+/* controller qui gère les formulaires de login et signup */
+.controller('LogCtrl', [
+'$scope',
+'$state',
+'Auth',
+function($scope, $state, Auth){
+   $scope.login = function() {
+    Auth.login($scope.user).then(function(){
+      $state.go('tab');
+    });
   };
-})
+
+  $scope.register = function() {
+    Auth.register($scope.user).then(function(){
+      $state.go('tab');
+    });
+  };
+
+
+}])
+
+/* Controle l'authentification de l'utilisateur (savoir s'il est login ou pas) */
+.controller('AuthCtrl', ['$scope','Auth', function($scope, Auth) {
+  $scope.signedIn = Auth.isAuthenticated;
+  $scope.logout = Auth.logout;
+  Auth.currentUser().then(function (user){
+    $scope.user = user;
+  });
+
+  $scope.$on('devise:new-registration', function (e, user){
+    $scope.user = user;
+  });
+
+  $scope.$on('devise:login', function (e, user){
+    $scope.user = user;
+  });
+
+  $scope.$on('devise:logout', function (e, user){
+    $scope.user = {};
+  });
+}])
 
 .controller('LikesCtrl', ['$scope','Likes','Performers','Places',
   function($scope, Likes, Performers, Places) {

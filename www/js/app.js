@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'uiGmapgoogle-maps'])
+angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.services', 'ngCordova', 'uiGmapgoogle-maps'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -35,13 +35,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 
 
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+$httpProvider.defaults.withCredentials = true;
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+
+  // first, the login view
+  .state('auth', {
+      url: '/auth',
+      templateUrl: 'templates/auth.html',
+      controller: 'AuthCtrl'
+  })
+  .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LogCtrl',
+      onEnter: ['$state', 'Auth', function($state, Auth) {
+        Auth.currentUser().then(function (){
+          $state.go('tab');
+        })
+      }]
+    })
+  .state('signup', {
+      url: '/signup',
+      templateUrl: 'templates/signup.html',
+      controller: 'LogCtrl',
+      onEnter: ['$state', 'Auth', function($state, Auth) {
+        Auth.currentUser().then(function (){
+          $state.go('tab');
+        })
+      }]
+    })
 
   // setup an abstract state for the tabs directive
     .state('tab', {
@@ -110,6 +137,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/map');
+  $urlRouterProvider.otherwise('/login');
 
 });
