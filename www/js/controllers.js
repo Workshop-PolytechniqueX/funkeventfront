@@ -45,94 +45,47 @@ $scope.addItems = function() {
 */
 
 
-  .controller('MapCtrl', function($scope, $timeout, $cordovaGeolocation, uiGmapGoogleMapApi, Yelp) {
 
-    $scope.markers = [];
-    $scope.infoVisible = false;
-    $scope.infoBusiness = {};
+  
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+  var options = {timeout: 10000, enableHighAccuracy: true};
 
-    // Initialize and show infoWindow for business
-    $scope.showInfo = function(marker, eventName, markerModel) {
-      $scope.infoBusiness = markerModel;
-      $scope.infoVisible = true;
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+    
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    // Hide infoWindow when 'x' is clicked
-    $scope.hideInfo = function() {
-      $scope.infoVisible = false;
-    };
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    var initializeMap = function(position) {
-      console.log(position);
-      if (!position) {
-        // Default to downtown Paris
-        position = {
-          coords: {
-            latitude: 48.715076, 
-            longitude: 2.211249
-          }
-        };
-      }
-      console.log(position);
-      // TODO add marker on current location
+    //Wait until the map is loaded
+    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
 
-      $scope.map = {
-        center: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        },
-        zoom: 16
-      };
+      var marker = new google.maps.Marker({
+          map: $scope.map,
+          animation: google.maps.Animation.DROP,
+          position: latLng
+      });      
 
-      // Make info window for marker show up above marker
-      $scope.windowOptions = {
-        pixelOffset: {
-          height: -32,
-          width: 0
-        }
-      };
-
-      Yelp.search(position).then(function(data) {
-        console.log(data);
-        for (var i = 0; i < 10; i++) {
-          var business = data.data.businesses[i];
-          $scope.markers.push({
-            id: i,
-            name: business.name,
-            url: business.url,
-            location: {
-              latitude: business.location.coordinate.latitude,
-              longitude: business.location.coordinate.longitude
-            }
-          });
-        }
-      }, function(error) {
-        console.log("Unable to access yelp");
-        console.log(error);
+      var infoWindow = new google.maps.InfoWindow({
+          content: "Here I am!"
       });
-    };
 
-    uiGmapGoogleMapApi.then(function(maps) {
-      // Don't pass timeout parameter here; that is handled by setTimeout below
-      var posOptions = {enableHighAccuracy: false};
-      $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
-        console.log("Got location: " + JSON.stringify(position));
-        initializeMap(position);
-      }, function(error) {
-        console.log(error);
-        initializeMap();
+      google.maps.event.addListener(marker, 'click', function () {
+          infoWindow.open($scope.map, marker);
       });
+
     });
 
-    // Deal with case where user does not make a selection
-    $timeout(function() {
-      if (!$scope.map) {
-        console.log("No confirmation from user, using fallback");
-        initializeMap();
-      }
-    }, 5000);
+  }, function(error){
+    console.log("Could not get location");
+  });
+})
 
-  })
   
 
 

@@ -1,4 +1,13 @@
-.angular-google-map-container {
+/*.angular-google-map-container {
   height: 700px;
 }
+*/
 
+.scroll {
+    height: 100%;
+}
+ 
+#map {
+    width: 100%;
+    height: 100%;
+}

@@ -1,4 +1,4 @@
-angular.module('starter.services', ['ngResource','starter.constants'])
+angular.module('starter.services', ['ngResource'])
 
 
 .factory('Likes', function ($resource) {
@@ -15,19 +15,4 @@ angular.module('starter.services', ['ngResource','starter.constants'])
 })
 
 
- .factory('Yelp', function($http, $q, apiUrl) {
-    return {
-      search: function(position) {
-        return $http({
-          method: "get",
-          url: apiUrl + 'api/v1/yelp/search',
-          params: {
-            limit: 10,
-            radius_filter: 500,
-            sort: 1,
-            ll: [position.coords.latitude, position.coords.longitude].join()
-          }
-        });
-      }
-    };
-  });
+;
