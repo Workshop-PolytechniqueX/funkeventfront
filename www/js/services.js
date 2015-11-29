@@ -1,9 +1,5 @@
 angular.module('starter.services', ['ngResource','starter.constants'])
 
-.factory('UserSession', function($resource) {
-  return $resource("http://funkevent.herokuapp.com/users/sign_in.json");
-})
-
 .factory('Likes', function ($resource) {
     return $resource('http://funkevent.herokuapp.com/likes/:likeId.json',
      {'query':  {method:'GET', isArray:false}});

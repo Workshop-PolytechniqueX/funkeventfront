@@ -1,5 +1,12 @@
 angular.module('starter.controllers', ['starter.services', 'Devise'])
 
+.config(function(AuthProvider) {
+        AuthProvider.loginPath('http://funkevent.herokuapp.com/users/sign_in.json');
+        AuthProvider.logoutPath('http://funkevent.herokuapp.com/users/sign_out.json');
+        AuthProvider.logoutMethod('GET');
+        AuthProvider.loginMethod('GET');
+        AuthProvider.resourceName('customer');
+    })
 
 /* controller qui gère les formulaires de login et signup */
 .controller('LogCtrl', [
@@ -7,15 +14,18 @@ angular.module('starter.controllers', ['starter.services', 'Devise'])
 '$state',
 'Auth',
 function($scope, $state, Auth){
-   $scope.login = function() {
+ 
+
+  $scope.login = function() {
+    console.log($scope.user);
     Auth.login($scope.user).then(function(){
-      $state.go('tab');
+      $state.go('tab.map');
     });
   };
 
   $scope.register = function() {
     Auth.register($scope.user).then(function(){
-      $state.go('tab');
+      $state.go('tab.map');
     });
   };
 
@@ -27,7 +37,7 @@ function($scope, $state, Auth){
   $scope.signedIn = Auth.isAuthenticated;
   $scope.logout = Auth.logout;
   Auth.currentUser().then(function (user){
-    $scope.user = user;
+  $scope.user = user;
   });
 
   $scope.$on('devise:new-registration', function (e, user){
@@ -35,10 +45,12 @@ function($scope, $state, Auth){
   });
 
   $scope.$on('devise:login', function (e, user){
+    console.log("Log in");
     $scope.user = user;
   });
 
   $scope.$on('devise:logout', function (e, user){
+    console.log("Log out");
     $scope.user = {};
   });
 }])
@@ -67,18 +79,6 @@ function($scope, $state, Auth){
 
   });
 }])
-
-/* INFINITE SCROLL
-var currentStart = 0
-
-$scope.addItems = function() {
-    for (var i = currentStart; i < currentStart+20; i++) {
-      $scope.items.push("Item " + i)
-    }
-    currentStart += 20
-    $scope.$broadcast('scroll.infiniteScrollComplete')
-  }
-*/
 
 
   .controller('MapCtrl', function($scope, $timeout, $cordovaGeolocation, uiGmapGoogleMapApi, Yelp) {

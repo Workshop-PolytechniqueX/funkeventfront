@@ -36,7 +36,8 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
 
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-$httpProvider.defaults.withCredentials = true;
+ $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+  // LOGIN: $httpProvider.defaults.withCredentials = true;
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -48,14 +49,15 @@ $httpProvider.defaults.withCredentials = true;
       url: '/auth',
       templateUrl: 'templates/auth.html',
       controller: 'AuthCtrl'
-  })
+}) 
   .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'LogCtrl',
       onEnter: ['$state', 'Auth', function($state, Auth) {
         Auth.currentUser().then(function (){
-          $state.go('tab');
+          console.log("already logged in");
+          $state.go('tab.map');
         })
       }]
     })
@@ -65,7 +67,8 @@ $httpProvider.defaults.withCredentials = true;
       controller: 'LogCtrl',
       onEnter: ['$state', 'Auth', function($state, Auth) {
         Auth.currentUser().then(function (){
-          $state.go('tab');
+          console.log("already logged in");
+          $state.go('tab.map');
         })
       }]
     })
@@ -126,6 +129,16 @@ $httpProvider.defaults.withCredentials = true;
       }
   }
 })
+  .state('tab.likes.params', {
+      url: '/params',
+      views: {
+      'tab-likes-params': {
+          templateUrl: "templates/tab-likes-params.html",
+          controller: 'AuthCtrl'
+      }
+  }
+}) 
+
   .state('tab.like', {
   url: "/likes/:likeId",
   views: {
