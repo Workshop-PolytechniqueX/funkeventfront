@@ -5,11 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-<<<<<<< HEAD
-angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.services', 'ngCordova', 'uiGmapgoogle-maps'])
-=======
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
->>>>>>> ce09c6d0ea209dc99fde6ca9686017a1c93bc9c0
+
+angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.services', 'ngCordova'])
+
 
 .run(function($ionicPlatform, GoogleMaps) {
   $ionicPlatform.ready(function() {
@@ -55,8 +53,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   // first, the login view
   .state('auth', {
       url: '/auth',
-      templateUrl: 'templates/auth.html',
-      controller: 'AuthCtrl'
+      templateUrl: 'templates/auth.html'
+      //,controller: 'AuthCtrl'
 }) 
   .state('login', {
       url: '/login',
@@ -65,7 +63,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       onEnter: ['$state', 'Auth', function($state, Auth) {
         Auth.currentUser().then(function (){
           console.log("already logged in");
-          $state.go('tab.map');
+          $state.go('tab.likes');
         })
       }]
     })
@@ -76,7 +74,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       onEnter: ['$state', 'Auth', function($state, Auth) {
         Auth.currentUser().then(function (){
           console.log("already logged in");
-          $state.go('tab.map');
+          $state.go('tab.likes');
         })
       }]
     })

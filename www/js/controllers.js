@@ -14,18 +14,22 @@ angular.module('starter.controllers', ['starter.services', 'Devise'])
 '$state',
 'Auth',
 function($scope, $state, Auth){
+   var config = {
+            headers: {
+                'X-HTTP-Method-Override': 'POST'
+            }
+        };
  
-
+  console.log("hi");
   $scope.login = function() {
-    console.log($scope.user);
-    Auth.login($scope.user).then(function(){
-      $state.go('tab.map');
+    Auth.login($scope.user, config).then(function(){
+      $state.go('tab.likes');
     });
   };
 
   $scope.register = function() {
-    Auth.register($scope.user).then(function(){
-      $state.go('tab.map');
+    Auth.register($scope.user, config).then(function(){
+      $state.go('tab.likes');
     });
   };
 
@@ -53,6 +57,13 @@ function($scope, $state, Auth){
     console.log("Log out");
     $scope.user = {};
   });
+
+   $scope.logout = function() {
+    Auth.logout($scope.user, config).then(function(){
+      $state.go('tab.likes');
+    });
+  };
+
 }])
 
 .controller('LikesCtrl', ['$scope','Likes','Performers','Places',
@@ -80,26 +91,10 @@ function($scope, $state, Auth){
   });
 }])
 
-<<<<<<< HEAD
-=======
-/* INFINITE SCROLL
-var currentStart = 0
 
-$scope.addItems = function() {
-    for (var i = currentStart; i < currentStart+20; i++) {
-      $scope.items.push("Item " + i)
-    }
-    currentStart += 20
-    $scope.$broadcast('scroll.infiniteScrollComplete')
-  }
-*/
-
- 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
->>>>>>> ce09c6d0ea209dc99fde6ca9686017a1c93bc9c0
 
 })
-
 
 
 .controller('LikeCtrl', function($scope, $stateParams, Likes) {

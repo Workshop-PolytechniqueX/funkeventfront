@@ -9,28 +9,43 @@ angular.module('starter.services', ['ngResource'])
     return $resource('http://funkevent.herokuapp.com/places/:placeId.json');
 })
 
+.factory('Places', function ($resource) {
+    return $resource('http://funkevent.herokuapp.com/places/:placeId.json');
+})
+
+.factory('NearEvents', function ($resource) {
+    return $resource('http://funkevent.herokuapp.com/events/nearby.json?lat=:latId&lgt=:lgtId&dist=:distId');
+})
+
 .factory('Performers', function ($resource) {
     return $resource('http://funkevent.herokuapp.com/performers/:performerId.json');
 })
 
 
-.factory('Markers', function($http) {
+.factory('Markers', function(*resource, Places, Performers, NearEvents) {
 
-  var markers = [];
+  
+  function getMarkers(lat,lgt,dist){
+    var markers = [];
+    NearEvents.query().$promise.then(function (result) {
 
-  return {
-    getMarkers: function(){
+    angular.forEach(result, function(ev) { //pour chaque like, on GET le lieu ou la place associé
+      
+      var performer = Performers.get({performerId: ev.performer_id});
+      var place = Places.get({placeId: ev.place_id});
+      markers.push( { "latitude": place.latitude,
+                      "longitude": place.longitude,
+                      "name": ev.name,
+                      "description": ev.description,
+                      "performer": performer.name,
+                      "place": place.name
+      } );
+
+    } );
 
 
-      return $http.get("http://funkevent.herokuapp.com/places.json").then(function(response){
-          markers = response;          
-
-          return markers;
-
-      });
-
-    }
-  }
+    };
+  });
 
 })
 
@@ -95,7 +110,7 @@ angular.module('starter.services', ['ngResource'])
   function loadMarkers(){
 
       //Get all of the markers from our Markers factory
-      Markers.getMarkers().then(function(markers){
+      Markers.getMarkers(latLng.latitude,latLng.longitude,1000).then(function(markers){
 
 /*      console.log("Markers: ", markers);*/
 /*
@@ -113,7 +128,7 @@ angular.module('starter.services', ['ngResource'])
               position: markerPos
           });
 
-          var infoWindowContent = "<h4>" + markers.data[i].name + "</h4>";          
+          var infoWindowContent = "<h4>" + markers.data[i].name + " " + marker.data[i].performer + "</h4>";          
 
           addInfoWindow(marker, infoWindowContent);
   
