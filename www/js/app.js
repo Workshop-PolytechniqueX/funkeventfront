@@ -5,9 +5,13 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+<<<<<<< HEAD
 angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.services', 'ngCordova', 'uiGmapgoogle-maps'])
+=======
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
+>>>>>>> ce09c6d0ea209dc99fde6ca9686017a1c93bc9c0
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, GoogleMaps) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,18 +24,22 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
+    GoogleMaps.init();
+
   });
 })
 
 
-.config(function(uiGmapGoogleMapApiProvider) {
+/*.config(function(uiGmapGoogleMapApiProvider) {
       uiGmapGoogleMapApiProvider.configure({
         //key: 'your api key',
         //libraries: 'weather,geometry,visualization',
         v: '3.17'
       });
 })
-
+*/
 
 
 
