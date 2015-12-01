@@ -77,6 +77,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           controller: 'LikeCtrl'
       }
   }
+})
+
+  .state('tab.events', {
+  url: "/events",
+  views: {
+      'tab-events': {
+          templateUrl: "templates/tab-events.html",
+          controller: 'EventsCtrl'
+      }
+  }
+})
+
+  .state('tab.event', {
+  url: "/events/:eventId",
+  views: {
+      'event': {
+          templateUrl: "templates/event.html",
+          controller: 'EventCtrl'
+      }
+  }
 });
 
   // if none of the above states are matched, use this as the fallback

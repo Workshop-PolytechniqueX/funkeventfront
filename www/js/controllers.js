@@ -30,4 +30,15 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('LikeCtrl', function($scope, $stateParams, Likes) {
     $scope.like = Likes.get({likeId: $stateParams.likeId});
     
-});
+})
+
+.controller('EventsCtrl', function($scope, Events) {
+    $scope.events = Events.query();
+    
+})
+
+.controller('EventCtrl', function($scope, $stateParams, Events) {
+    $scope.event = Events.get({eventId: $stateParams.eventId});
+    
+})
+;
