@@ -121,11 +121,4 @@ function($scope, $state, Auth){
     }
     
 })
-
-.controller('Homectrl', function($scope) {
-
-    $scope.init = function() {
-      alert($scope.query.price);
-    }
-
-  });
+;
