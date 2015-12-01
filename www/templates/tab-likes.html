@@ -1,12 +1,13 @@
-<ion-view view-title="Likes">
-  <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="like in likes"
-                href="#/tab/likes/{{like.id}}">
-        <h3>{{like.id}}</h3>
-        <h2>{{like.like_link_id}}</h2>
-        <p>{{like.like_link_type}}</p>
-       </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-view title="Profile">
+  <ion-tabs class="tabs-top">
+    <ion-tab title="Performers liked" ui-sref="tab.likes.performers">
+      <ion-nav-view name="tab-likes-performers"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="Places liked" ui-sref="tab.likes.places">
+      <ion-nav-view name="tab-likes-places"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="Account parameters" ui-sref="tab.likes.params">
+      <ion-nav-view name="tab-likes-params"></ion-nav-view>
+    </ion-tab>
+  </ion-tabs>
 </ion-view>

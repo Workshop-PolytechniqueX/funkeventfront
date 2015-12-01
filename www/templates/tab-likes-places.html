@@ -1,0 +1,19 @@
+<ion-view view-title="Places liked">
+  <ion-content>
+
+    <!-- Tab 2 content -->
+    <ion-list>
+
+      <ion-item ng-repeat="place in placesLike"
+                href="#/lien ferdi vue profil place">
+
+        <h3>{{place.name}}</h3>
+        <p>Capacité : {{place.capacity}}</p> 
+        <p>Website : {{place.website}}</p>
+
+       </ion-item>
+       <!-- <ion-infinite-scroll on-infinite="addItems()"></ion-infinite-scroll>  -->
+    </ion-list>
+
+  </ion-content>
+</ion-view>

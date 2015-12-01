@@ -1,0 +1,34 @@
+<ion-view view-title="Events">
+  <ion-content>
+
+      <ion-item ng-init="events"
+                href="#/tab/events/{{event.id}}">
+        
+      <div>
+        <label>Search: <input ng-model="searchText"></label>
+        <label>Price: <input type="range" ng-model="searchPrice"></label>
+      </div>
+      <hr>
+
+      <ion-list id="searchTextResults">
+        <ion-item ng-repeat="event in events | filter:searchText"
+                  href="#/tab/events/{{event.id}}">
+          <h3>{{event.name}}</h3>
+          <h2>{{event.description}}</h2>
+          <p>{{event.date}}</p>
+        </ion-item>
+      </ion-list>
+
+      <ion-list id="searchPriceResults">
+        <ion-item ng-repeat="event in events | filter:searchPrice"
+                  href="#/tab/events/{{event.id}}">
+          <h3>{{event.name}}</h3>
+          <h2>{{event.description}}</h2>
+          <p>{{event.date}}</p>
+          <p>{{event.price}}</p>
+        </ion-item>
+      </ion-list>
+
+  </ion-content>
+</ion-view>
+
