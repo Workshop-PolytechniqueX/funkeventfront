@@ -103,10 +103,6 @@ angular.module('starter.services', ['ngResource'])
 
       map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-<<<<<<< HEAD
-APIAccessModule.factory('Events', function ($resource) {
-    return $resource('http://funkevent.herokuapp.com/events/:eventId.json');
-=======
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(map, 'idle', function(){
 
