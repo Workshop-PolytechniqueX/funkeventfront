@@ -111,4 +111,21 @@ function($scope, $state, Auth){
     $scope.event = Events.get({eventId: $stateParams.eventId});
     
 })
-;
+
+.controller('SearchEventsCtrl', function($scope, SearchEvents, Events) {
+  
+    $scope.events = Events.query();
+
+    $scope.searchevents = function() {
+      $scope.events = SearchEvents.query({chpId: $scope.query.price, catId: $scope.query.category, gnrId: $scope.query.genre, latId: $scope.query.latitude, lgtId: $scope.query.longitude, distanceId: $scope.query.distance});
+    }
+    
+})
+
+.controller('Homectrl', function($scope) {
+
+    $scope.init = function() {
+      alert($scope.query.price);
+    }
+
+  });

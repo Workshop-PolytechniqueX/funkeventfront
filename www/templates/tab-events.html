@@ -1,34 +1,53 @@
 <ion-view view-title="Events">
   <ion-content>
 
-      <ion-item ng-init="events"
-                href="#/tab/events/{{event.id}}">
-        
-      <div>
-        <label>Search: <input ng-model="searchText"></label>
-        <label>Price: <input type="range" ng-model="searchPrice"></label>
-      </div>
-      <hr>
+  <form name="myForm" method="POST" ng-controller="SearchEventsCtrl">
+    <label for="multipleSelect"> Category: </label><br>
+    <select name="category" ng-model="query.category">
+      <option value="Singer">Music Concert</option>
+      <option value="magician">Magician</option>
+      <option value="acrobat">Acrobats</option>
+    </select><br>
 
-      <ion-list id="searchTextResults">
-        <ion-item ng-repeat="event in events | filter:searchText"
-                  href="#/tab/events/{{event.id}}">
-          <h3>{{event.name}}</h3>
-          <h2>{{event.description}}</h2>
-          <p>{{event.date}}</p>
-        </ion-item>
-      </ion-list>
+    <label for="multipleSelect"> Genre: </label><br>
+    <select name="genre" ng-model="query.genre">
+      <option value="Soul">Soul</option>
+      <option value="Pop">Pop</option>
+      <option value="Rock">Rock</option>
+    </select><br>
 
-      <ion-list id="searchPriceResults">
-        <ion-item ng-repeat="event in events | filter:searchPrice"
-                  href="#/tab/events/{{event.id}}">
-          <h3>{{event.name}}</h3>
-          <h2>{{event.description}}</h2>
-          <p>{{event.date}}</p>
-          <p>{{event.price}}</p>
-        </ion-item>
-      </ion-list>
+    <input ng-model="query.latitude">
+    <input ng-model="query.longitude">
+    <input ng-model="query.distance">
+    <input ng-model="query.price">
 
-  </ion-content>
-</ion-view>
+    
+    <input type="button" ng-click="searchevents()" value="Search"/>
+
+    <ion-item ng-init="events"
+               href="#/tab/events/{{event.id}}">
+            
+          <div>
+            <label>Search: <input ng-model="searchText"></label>
+          </div>
+          <hr>
+
+          <ion-list id="searchTextResults">
+            <ion-item ng-repeat="event in events | filter:searchText"
+                      href="#/tab/events/{{event.id}}">
+              <h3>{{event.name}}</h3>
+              <h2>{{event.description}}</h2>
+              <p>{{event.date}}</p>
+            </ion-item>
+          </ion-list>
+      </ion-content>
+    </ion-view>
+  </form>
+
+  
+
+
+    
+
+
 
