@@ -155,7 +155,7 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
   views: {
       'tab-events': {
           templateUrl: "templates/tab-events.html",
-          controller: 'EventsCtrl'
+          controller: 'SearchEventsCtrl'
       }
   }
 })
@@ -168,7 +168,19 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
           controller: 'EventCtrl'
       }
   }
-});
+})
+
+  .state('tab.searchevents', {
+  url: "/events/search",
+  views: {
+      'tab-events': {
+          templateUrl: "templates/tab-events.html",
+          controller: 'SearchEventsCtrl'
+      }
+  }
+})
+
+  ;
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

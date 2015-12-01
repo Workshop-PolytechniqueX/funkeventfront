@@ -17,6 +17,10 @@ angular.module('starter.services', ['ngResource'])
     return $resource('http://funkevent.herokuapp.com/events/nearby.json?latitude=:latId&longitude=:lgtId&distance=:distId');
 })
 
+.factory('SearchEvents', function ($resource) {
+    return $resource('http://funkevent.herokuapp.com/events/search.json?latitude=:latId&longitude=:lgtId&distance=:distanceId&chp=:chpId&cat=:catId&gnr=:gnrId');
+})
+
 .factory('Performers', function ($resource) {
     return $resource('http://funkevent.herokuapp.com/performers/:performerId.json');
 })
