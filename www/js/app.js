@@ -9,6 +9,7 @@
 angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 
+
 .run(function($ionicPlatform, GoogleMaps) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -42,12 +43,16 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
 
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
- $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
-  // LOGIN: $httpProvider.defaults.withCredentials = true;
+  //$httpProvider.defaults.withCredentials = true;
+
+  //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+ 
+
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
+
   $stateProvider
 
   // first, the login view
@@ -98,16 +103,6 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
     }
   })
 
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  })
   .state('tab.likes', {
   url: '/likes',
   views: {

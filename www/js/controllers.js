@@ -3,7 +3,7 @@ angular.module('starter.controllers', ['starter.services', 'Devise'])
 .config(function(AuthProvider) {
         AuthProvider.loginPath('http://funkevent.herokuapp.com/users/sign_in.json');
         AuthProvider.logoutPath('http://funkevent.herokuapp.com/users/sign_out.json');
-        AuthProvider.logoutMethod('GET');
+        AuthProvider.logoutMethod('DELETE');
         AuthProvider.loginMethod('GET');
         AuthProvider.resourceName('customer');
     })
@@ -39,7 +39,14 @@ function($scope, $state, Auth){
 /* Controle l'authentification de l'utilisateur (savoir s'il est login ou pas) */
 .controller('AuthCtrl', ['$scope','Auth', function($scope, Auth) {
   $scope.signedIn = Auth.isAuthenticated;
-  $scope.logout = Auth.logout;
+
+   var config = {
+            headers: {
+                'X-HTTP-Method-Override': 'DELETE'
+            }
+        };
+ 
+
   Auth.currentUser().then(function (user){
   $scope.user = user;
   });
@@ -59,7 +66,7 @@ function($scope, $state, Auth){
   });
 
    $scope.logout = function() {
-    Auth.logout($scope.user, config).then(function(){
+    Auth.logout(config).then(function(oldUser){
       $state.go('tab.likes');
     });
   };
