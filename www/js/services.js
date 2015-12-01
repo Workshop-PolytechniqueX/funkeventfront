@@ -188,6 +188,4 @@ angular.module('starter.services', ['ngResource'])
       initMap();
     }
   }
-
->>>>>>> dc31d98b5c824336ff530efc6e0238724a0c5f6e
 });
