@@ -14,7 +14,7 @@ angular.module('starter.services', ['ngResource'])
 })
 
 .factory('NearEvents', function ($resource) {
-    return $resource('http://funkevent.herokuapp.com/events/nearby.json?lat=:latId&lgt=:lgtId&dist=:distId');
+    return $resource('http://funkevent.herokuapp.com/events/nearby.json?latitude=:latId&longitude=:lgtId&dist=:distId');
 })
 
 .factory('Performers', function ($resource) {
@@ -22,38 +22,68 @@ angular.module('starter.services', ['ngResource'])
 })
 
 
-.factory('Markers', function(*resource, Places, Performers, NearEvents) {
+.factory('Markers', ['$q','$resource','Places','Performers','NearEvents', function ($q, $resource, Places, Performers, NearEvents) {
 
   
-  function getMarkers(lat,lgt,dist){
-    var markers = [];
-    NearEvents.query().$promise.then(function (result) {
+  var place = null;
+  var performer = null;
+
+  return {
+    getMarkers: function(lat,lgt,dist){
+    var promises = [];
+    var deferredCombinedItems = $q.defer();
+    var combinedItems = [];
+
+    return NearEvents.query({latId: lat, lgtId: lgt, distId: dist}).$promise.then(function (result) {
+
+     console.log(result)
 
     angular.forEach(result, function(ev) { //pour chaque like, on GET le lieu ou la place associé
-      
-      var performer = Performers.get({performerId: ev.performer_id});
-      var place = Places.get({placeId: ev.place_id});
-      markers.push( { "latitude": place.latitude,
-                      "longitude": place.longitude,
-                      "name": ev.name,
-                      "description": ev.description,
-                      "performer": performer.name,
-                      "place": place.name
-      } );
 
+      var deferredItemList = $q.defer();
+
+      Places.get({placeId: ev.place_id}).$promise.then(function (place){
+      
+          combinedItems.push({ "latitude": place.latitude,
+                          "longitude": place.longitude,
+                          "name": ev.name,
+                          "description": ev.description,
+                          "place": place.name
+          });
+          
+          deferredItemList.resolve();
+          console.log("promesse la plus profonde finie")
+
+      } );
+      
+
+      
+      promises.push(deferredItemList.promise);
+      console.log("fin de l'élement boucle for");
     } );
 
+    return $q.all(promises).then( function() {
+          console.log("se fait tout a la fin");
+          deferredCombinedItems.resolve(combinedItems);
+          return combinedItems;
+    });
 
-    };
-  });
+    
+    
 
-})
+    } );
+  
+    }
+  }
+
+}])
 
 
 .factory('GoogleMaps', function($cordovaGeolocation, Markers){
 
   var apiKey = false;
   var map = null;
+  var maPos = null;
 
   function initMap(){
 
@@ -62,6 +92,8 @@ angular.module('starter.services', ['ngResource'])
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
       
       var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      maPos = latLng;
+
 
       var mapOptions = {
         center: latLng,
@@ -110,16 +142,16 @@ angular.module('starter.services', ['ngResource'])
   function loadMarkers(){
 
       //Get all of the markers from our Markers factory
-      Markers.getMarkers(latLng.latitude,latLng.longitude,1000).then(function(markers){
+      Markers.getMarkers(maPos.lat(),maPos.lng(),10000000).then(function(markers){
 
 /*      console.log("Markers: ", markers);*/
 /*
         var records = markers.data;*/
 
 /*      var record = records[i];   */
-
-        for (var i = 0; i < markers.data.length; i++) {
-          var markerPos = new google.maps.LatLng(markers.data[i].latitude, markers.data[i].longitude);
+       console.log(markers);
+        for (var i = 0; i < markers.length; i++) {
+          var markerPos = new google.maps.LatLng(markers[i].latitude, markers[i].longitude);
 
           // Add the markerto the map
           var marker = new google.maps.Marker({
@@ -128,7 +160,7 @@ angular.module('starter.services', ['ngResource'])
               position: markerPos
           });
 
-          var infoWindowContent = "<h4>" + markers.data[i].name + " " + marker.data[i].performer + "</h4>";          
+          var infoWindowContent = "<h4>" + markers[i].name + " " + markers[i].description + "</h4>";          
 
           addInfoWindow(marker, infoWindowContent);
   
