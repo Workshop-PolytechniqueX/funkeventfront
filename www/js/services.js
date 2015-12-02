@@ -201,8 +201,8 @@ angular.module('starter.services', ['ngResource'])
           var place = markers[i].place;
 
 
-          var infoWindowContent = "<h4>" + "Event: " + '<a href="#/tab/events/' + markers[i].eventId + '">' + markers[i].name + '</a>'
-          + "<br>" + "Place: " + '<a href="#/tab/places/' +  markers[i].placeId + '">' + markers[i].place + '</a>' + "</h4>";          
+          var infoWindowContent = "<h4>" + "Event: " + '<a href="#/event/' + markers[i].eventId + '">' + markers[i].name + '</a>'
+          + "<br>" + "Place: " + '<a href="#/place/' +  markers[i].placeId + '">' + markers[i].place + '</a>' + "</h4>";          
 
           addInfoWindow(marker, infoWindowContent);
           
