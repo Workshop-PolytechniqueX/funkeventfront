@@ -84,6 +84,17 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
       }]
     })
 
+  .state('performer', {
+  url: "/performer/:performerId",
+  templateUrl: "templates/performer.html",
+  controller: 'PerformerCtrl'     
+  })
+   .state('place', {
+  url: "/place/:placeId",
+  templateUrl: "templates/place.html",
+  controller: 'PlaceCtrl'     
+  })
+
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
@@ -159,6 +170,8 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
       }
   }
 })
+
+
 
   .state('tab.event', {
   url: "/events/:eventId",

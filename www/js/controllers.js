@@ -114,6 +114,26 @@ function($scope, $state, Auth){
     
 })
 
+.controller('PerformerCtrl', function($scope, $stateParams, Performers, Images) {
+  $scope.performer = Performers.get({performerId: $stateParams.performerId});
+  Images.query({imtype: "performer", imid: $stateParams.performerId}).$promise.then(function (result) {
+    if (result != null){
+      $scope.image = result[0];
+    }
+
+  });
+    
+})
+
+.controller('PlaceCtrl', function($scope, $stateParams, Places, Images) {
+  $scope.place = Places.get({placeId: $stateParams.placeId});
+  Images.query({imtype: "place", imid: $stateParams.placeId}).$promise.then(function (result) {
+    if (result != null){
+      $scope.image = result[0];
+    }
+  });  
+})
+
 .controller('EventCtrl', function($scope, $stateParams, Events) {
     $scope.event = Events.get({eventId: $stateParams.eventId});
     

@@ -1,0 +1,19 @@
+<ion-view title="Performer">
+    <ion-content overflow-scroll="true" padding="'true'" class="has-header">
+        <div class="col-md-6 col-md-offset-3">
+        <h2>{{performer.name}}</h2>
+        <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; width: 100%; background-color: rgb(255, 255, 255);">
+             <img ng-src="{{image.url_image}}">
+        </div>
+        <div>
+            <p>{{performer.description}}
+            </p>
+        </div>
+        <ion-list>
+            <ion-item menu-close="">Category : {{performer.performer_category}}</ion-item>
+            <ion-item menu-close="">Genre : {{performer.genre}}</ion-item>
+            <ion-item menu-close="">Website : {{event.url}}</ion-item>
+        </ion-list>
+    </div>
+    </ion-content>
+</ion-view>

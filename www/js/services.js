@@ -5,6 +5,10 @@ angular.module('starter.services', ['ngResource'])
      {'query':  {method:'GET', isArray:false}});
 })
 
+.factory('Images', function($resource){
+    return $resource('http://funkevent.herokuapp.com/images/getpic.json?imtype=:imtype&imid=:imid');
+})
+
 .factory('Places', function ($resource) {
     return $resource('http://funkevent.herokuapp.com/places/:placeId.json');
 })
