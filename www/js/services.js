@@ -38,14 +38,7 @@ angular.module('starter.services', ['ngResource'])
     var deferredCombinedItems = $q.defer();
     var combinedItems = [];
 
-    console.log('Latitude :' + Lat);
-    console.log('Longitude :' + Lgt);
-    console.log('Distance :' + dist);
-
-
     return NearEvents.query({latId: Lat, lgtId: Lgt, distId: dist}).$promise.then(function (result) {
-
-/*     console.log(result)*/
 
     angular.forEach(result, function(ev) { //pour chaque like, on GET le lieu ou la place associé
 
@@ -64,9 +57,7 @@ angular.module('starter.services', ['ngResource'])
 /*          console.log("promesse la plus profonde finie")*/
 
       } );
-      
 
-      
       promises.push(deferredItemList.promise);
 /*      console.log("fin de l'élement boucle for");*/
     } );
@@ -77,10 +68,7 @@ angular.module('starter.services', ['ngResource'])
           return combinedItems;
     });
 
-    
-    
-
-    } );
+    });
   
     }
   }
@@ -104,7 +92,6 @@ angular.module('starter.services', ['ngResource'])
       var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       maPos = latLng;
 
-
       var mapOptions = {
         center: latLng,
         zoom: 15,
@@ -120,7 +107,7 @@ angular.module('starter.services', ['ngResource'])
       google.maps.event.addListener(map, 'zoom_changed', function(){
         console.log("zoomed!");
         loadMarkers();
-        });
+      });
 
       var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
       var marker = new google.maps.Marker({
@@ -130,7 +117,6 @@ angular.module('starter.services', ['ngResource'])
       icon: iconBase + 'blu-blank-lv.png'
       });
 
-
       var infoWindow = new google.maps.InfoWindow({
           content: "Vous êtes ici!"
       });
@@ -139,8 +125,8 @@ angular.module('starter.services', ['ngResource'])
           infoWindow.open(map, marker);
       });
 
-        //Load the markers
-        loadMarkers();
+      //Load the markers
+      loadMarkers();
 
       });
 
@@ -150,7 +136,6 @@ angular.module('starter.services', ['ngResource'])
         //Load the markers
         loadMarkers();
     });
-
   }
 
 
@@ -174,14 +159,14 @@ angular.module('starter.services', ['ngResource'])
 
       console.log('boundingRadius :' + boundingRadius);
  
-
       //Get all of the markers from our Markers factory
       Markers.getMarkers(maPos.lat(),maPos.lng(),boundingRadius).then(function(markers){
 
-
+        //For each place, we are putting a marker on the map
         for (var i = 0; i < markers.length; i++) {
           if (!markerExists(markers[i].latitude, markers[i].longitude)){
 
+          //Get the marker position 
           var markerPos = new google.maps.LatLng(markers[i].latitude, markers[i].longitude);
 
           // Add the markerto the map
@@ -191,14 +176,22 @@ angular.module('starter.services', ['ngResource'])
               position: markerPos
           });
 
+         // Add the marker to the markerCache so we know not to add it again later
+          var markerData = {
+            lat: markers[i].latitude,
+            lng: markers[i].longitude,
+          };
+ 
+          markerCache.push(markerData);
+
           var infoWindowContent = "<h4>" + markers[i].name + " " + markers[i].description + "</h4>";          
 
           addInfoWindow(marker, infoWindowContent);
   
+          }
         }
-      }
 
-      }); 
+     }); 
 
   }
 
