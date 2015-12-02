@@ -82,6 +82,7 @@ angular.module('starter.services', ['ngResource'])
   var map = null;
   var maPos = null;
   var markerCache = [];
+  var openwindow;
 
   function initMap(){
 
@@ -156,8 +157,6 @@ angular.module('starter.services', ['ngResource'])
       };
  
       var boundingRadius = (getDistanceBetweenPoints(boundsNorm.northeast, boundsNorm.southwest, 'km')) / 2;
-
-      console.log('boundingRadius :' + boundingRadius);
  
       //Get all of the markers from our Markers factory
       Markers.getMarkers(maPos.lat(),maPos.lng(),boundingRadius).then(function(markers){
@@ -184,7 +183,8 @@ angular.module('starter.services', ['ngResource'])
  
           markerCache.push(markerData);
 
-          var infoWindowContent = "<h4>" + markers[i].name + " " + markers[i].description + "</h4>";          
+          var infoWindowContent = "<h4>" + "Event: " + markers[i].name + "<br>" + "Description: " + markers[i].description 
+          + "<br>" + "Place: " + markers[i].place + "</h4>";          
 
           addInfoWindow(marker, infoWindowContent);
   
@@ -230,8 +230,6 @@ angular.module('starter.services', ['ngResource'])
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
  
-    console.log('d :' + d);
-
     return d;
  
   }
@@ -248,7 +246,13 @@ angular.module('starter.services', ['ngResource'])
       });
 
       google.maps.event.addListener(marker, 'click', function () {
-          infoWindow.open(map, marker);
+      
+      if(openwindow){
+        eval(openwindow).close();
+      }
+      infoWindow.open(map, marker);
+      openwindow=infoWindow;
+
       });
       
   }
