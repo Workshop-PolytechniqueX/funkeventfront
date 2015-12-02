@@ -50,7 +50,9 @@ angular.module('starter.services', ['ngResource'])
                           "longitude": place.longitude,
                           "name": ev.name,
                           "description": ev.description,
-                          "place": place.name
+                          "place": place.name,
+                          "placeId": ev.place_id,
+                          "eventId": ev.id
           });
           
           deferredItemList.resolve();
@@ -190,11 +192,18 @@ angular.module('starter.services', ['ngResource'])
  
           markerCache.push(markerData);
 
-          var infoWindowContent = "<h4>" + "Event: " + markers[i].name + "<br>" + "Description: " + markers[i].description 
-          + "<br>" + "Place: " + markers[i].place + "</h4>";          
+          var description = markers[i].description;
+          var Event = markers[i].name;
+          var place = markers[i].place;
+
+
+          var infoWindowContent = "<h4>" + "Event: " + '<a href="#/tab/events/' + markers[i].eventId + '">' + markers[i].name + '</a>'
+          + "<br>" + "Place: " + '<a href="#/tab/places/' +  markers[i].placeId + '">' + markers[i].place + '</a>' + "</h4>";          
 
           addInfoWindow(marker, infoWindowContent);
-  
+          
+
+          console.log(markers[i].eventId);
           }
         }
 
