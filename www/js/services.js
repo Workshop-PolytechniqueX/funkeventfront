@@ -123,7 +123,14 @@ angular.module('starter.services', ['ngResource'])
       });
 
       google.maps.event.addListener(marker, 'click', function () {
-          infoWindow.open(map, marker);
+
+        if(openwindow){
+          eval(openwindow).close();
+      }
+
+        infoWindow.open(map, marker);
+        openwindow=infoWindow;
+
       });
 
       //Load the markers
