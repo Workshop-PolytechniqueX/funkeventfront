@@ -9,12 +9,17 @@ angular.module('starter.services', ['ngResource'])
     return $resource('http://funkevent.herokuapp.com/images/getpic.json?imtype=:imtype&imid=:imid');
 })
 
+.factory('Performers', function ($resource) {
+    return $resource('http://funkevent.herokuapp.com/performers/:performerId.json');
+})
+
+
 .factory('Places', function ($resource) {
     return $resource('http://funkevent.herokuapp.com/places/:placeId.json');
 })
 
 .factory('Events', function ($resource) {
-    return $resource('http://funkevent.herokuapp.com/events/:eventID.json');
+    return $resource('http://funkevent.herokuapp.com/events/:eventId.json');
 })
 
 .factory('NearEvents', function ($resource) {
@@ -25,9 +30,6 @@ angular.module('starter.services', ['ngResource'])
     return $resource('http://funkevent.herokuapp.com/events/search.json?latitude=:latId&longitude=:lgtId&distance=:distanceId&chp=:chpId&cat=:catId&gnr=:gnrId');
 })
 
-.factory('Performers', function ($resource) {
-    return $resource('http://funkevent.herokuapp.com/performers/:performerId.json');
-})
 
 
 .factory('Markers', ['$q','$resource','Places','Performers','NearEvents', function ($q, $resource, Places, Performers, NearEvents) {

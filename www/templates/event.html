@@ -1,34 +1,20 @@
-<!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
--->
-<ion-view view-title="Event">
-  <ion-content>
-    <div class="list card">
-      <div class="item">
-        <h3>{{event.name}}</h3>
-        <h2>{{event.place}}</h2>
-        <p>{{event.description}}</p>
+<ion-view title="Event">
+    <ion-content padding="'true'" class="has-header">
+    <div class="col-md-6 col-md-offset-3" >
+        <h2>{{even.name}}</h2>
+        <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; width: 100%; background-color: rgb(255, 255, 255);">
+            <img ng-src="{{image.url_image}}">
+        </div>
+        <div>
+            <p>{{even.description}}
+            </p>
+        </div>
+        <ion-list>
+            <ion-item menu-close="">Who : <a href="#/performer/{{even.performer_id}}">{{perf.name}}</a></ion-item>
+            <ion-item menu-close="">Where : <a href="#/place/{{even.place_id}}">{{place.name}}</a></ion-item>
+            <ion-item menu-close="">When : {{even.date}}</ion-item>
+            <ion-item menu-close="">How much : {{even.price}}</ion-item>
+        </ion-list>
       </div>
-      <div class="item item-body">
-        <p>{{event.description}}</p>
-      </div>
-      <div class="item tabs tabs-secondary tabs-icon-left">
-        <a class="tab-item">
-          <i class="icon ion-thumbsup"></i>
-          Like
-        </a>
-        <a class="tab-item">
-          <i class="icon ion-chatbox"></i>
-          Comment
-        </a>
-        <a class="tab-item">
-          <i class="icon ion-share"></i>
-          Share
-        </a>
-      </div>
-    </div>
-  </ion-content>
+    </ion-content>
 </ion-view>

@@ -1,19 +1,18 @@
-<ion-view title="place">
+<ion-view title="Place">
     <ion-content padding="'true'" class="has-header">
     <div class="col-md-6 col-md-offset-3">
         <h2>{{place.name}}</h2>
-        <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; width: 100%; height: 200px; background-color: rgb(255, 255, 255);">
-            <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
-#Adresse de l'image ici, autrement image par défaut
+        <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; width: 100%; background-color: rgb(255, 255, 255);">
+            <img ng-src="{{image.url_image}}">
         </div>
         <div>
             <p>{{place.description}}
             </p>
         </div>
         <ion-list>
-            <ion-item menu-close="">Location : {{place.latitude}}, {{place.longitude}}</ion-item>
+            <ion-item menu-close="">Location : {{place.adress}}</ion-item>
             <ion-item menu-close="">Capacity : {{place.capacity}}</ion-item>
-            <ion-item menu-close="">Website : {{place.website}}</ion-item>
+            <ion-item menu-close="">Website : {{place.url_place}}</ion-item>
         </ion-list>
     </div>
     </ion-content>

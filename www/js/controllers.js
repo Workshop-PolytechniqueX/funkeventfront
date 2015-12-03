@@ -134,9 +134,19 @@ function($scope, $state, Auth){
   });  
 })
 
-.controller('EventCtrl', function($scope, $stateParams, Events) {
-    $scope.event = Events.get({eventId: $stateParams.eventId});
-    
+.controller('EventCtrl', function($scope, $stateParams, Events, Places, Performers, Images) {
+  Events.get({eventId: $stateParams.eventId}).$promise.then(function (result) {
+    $scope.even = result;
+    $scope.perf = Performers.get({performerId: result.performer_id});
+    $scope.place = Places.get({placeId: result.place_id});
+  })
+ 
+  Images.query({imtype: "event", imid: $stateParams.eventId}).$promise.then(function (result) {
+    if (result != null){
+      $scope.image = result[0];
+
+    }
+  });  
 })
 
 .controller('SearchEventsCtrl', function($scope, SearchEvents, Events) {
@@ -144,7 +154,9 @@ function($scope, $state, Auth){
     $scope.events = Events.query();
 
     $scope.searchevents = function() {
-      $scope.events = SearchEvents.query({chpId: $scope.query.price, catId: $scope.query.category, gnrId: $scope.query.genre, latId: $scope.query.latitude, lgtId: $scope.query.longitude, distanceId: $scope.query.distance});
+      $scope.events = SearchEvents.query({chpId: $scope.query.price,
+       catId: $scope.query.category, gnrId: $scope.query.genre, latId: $scope.query.latitude,
+        lgtId: $scope.query.longitude, distanceId: $scope.query.distance});
     }
     
 })

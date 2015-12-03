@@ -40,6 +40,10 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
 })
 */
 
+.config(function($ionicConfigProvider) {
+  $ionicConfigProvider.scrolling.jsScrolling(false);
+})
+
 
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -93,6 +97,11 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
   url: "/place/:placeId",
   templateUrl: "templates/place.html",
   controller: 'PlaceCtrl'     
+  }) 
+  .state('event', {
+  url: "/event/:eventId",
+  templateUrl: "templates/event.html",
+  controller: 'EventCtrl'
   })
 
   // setup an abstract state for the tabs directive
@@ -171,27 +180,6 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
   }
 })
 
-
-
-  .state('tab.event', {
-  url: "/events/:eventId",
-  views: {
-      'event': {
-          templateUrl: "templates/event.html",
-          controller: 'EventCtrl'
-      }
-  }
-})
-
-  .state('tab.searchevents', {
-  url: "/events/search",
-  views: {
-      'tab-events': {
-          templateUrl: "templates/tab-events.html",
-          controller: 'SearchEventsCtrl'
-      }
-  }
-})
 
   ;
 
