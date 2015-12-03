@@ -5,11 +5,11 @@
     <ion-list>
 
       <ion-item ng-repeat="place in placesLike"
-                href="#/lien ferdi vue profil place">
+                href="#/place/{{place.id}}">
 
         <h3>{{place.name}}</h3>
         <p>Capacité : {{place.capacity}}</p> 
-        <p>Website : {{place.website}}</p>
+        <p>Website : {{place.url_place}}</p>
 
        </ion-item>
        <!-- <ion-infinite-scroll on-infinite="addItems()"></ion-infinite-scroll>  -->

@@ -1,8 +1,7 @@
 angular.module('starter.services', ['ngResource'])
 
 .factory('Likes', function ($resource) {
-    return $resource('http://funkevent.herokuapp.com/likes/:likeId.json',
-     {'query':  {method:'GET', isArray:false}});
+    return $resource('http://funkevent.herokuapp.com/likes/:likeId.json');
 })
 
 .factory('Images', function($resource){

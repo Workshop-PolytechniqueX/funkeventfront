@@ -5,13 +5,13 @@
     <ion-list>
 
       <ion-item ng-repeat="performer in performersLike"
-                href="#/lien ferdi vue profil performer">
+                href="#/performer/{{performer.id}}">
 
         <h3>{{performer.name}}</h3>
         <h2>{{performer.category!=null ? ("Catégorie : " + performer.category) : ""}}</h2>
         <p>Genre : {{performer.genre}}</p> 
         <p>Description : {{performer.description}}</p>
-        <p>Website : {{performer.url}}</p>
+        <p>Website : {{performer.url_performer}}</p>
 
        </ion-item>
        <!-- <ion-infinite-scroll on-infinite="addItems()"></ion-infinite-scroll>  -->

@@ -24,7 +24,6 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
       StatusBar.styleDefault();
     }
 
-
     GoogleMaps.init();
 
   });
@@ -40,6 +39,8 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
 })
 */
 
+
+//permet de scroller sur toutes les pages
 .config(function($ionicConfigProvider) {
   $ionicConfigProvider.scrolling.jsScrolling(false);
 })
@@ -47,6 +48,10 @@ angular.module('starter', ['ionic', 'Devise', 'starter.controllers', 'starter.se
 
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  //$httpProvider.defaults.headers.common = {};
+  //$httpProvider.defaults.headers.post = {};
+  //$httpProvider.defaults.headers.put = {};
+  //$httpProvider.defaults.headers.patch = {};
   //$httpProvider.defaults.withCredentials = true;
 
   //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');

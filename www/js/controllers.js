@@ -125,14 +125,31 @@ function($scope, $state, Auth){
     
 })
 
-.controller('PlaceCtrl', function($scope, $stateParams, Places, Images) {
+.controller('PlaceCtrl', function($scope, $stateParams, Places, Images, Likes, $timeout) {
   $scope.place = Places.get({placeId: $stateParams.placeId});
   Images.query({imtype: "place", imid: $stateParams.placeId}).$promise.then(function (result) {
     if (result != null){
       $scope.image = result[0];
     }
-  });  
-})
+  }); 
+
+   $scope.addLike = function() {
+
+     $scope.like=new Likes();
+      result = $scope.like;
+      result.link_like_id=$scope.place.id;
+      result.link_like_type="place";
+      result.user_id=2;
+      console.log(result);
+      result.$save();
+
+  };
+    // $scope.like.link_like_type="place";
+    // $scope.like.link_like_id=$scope.place.id;
+    // $scope.like.user_id=1;
+     //$http.post('ttp://funkevent.herokuapp.com/likes.json', $scope.like);
+}
+)
 
 .controller('EventCtrl', function($scope, $stateParams, Events, Places, Performers, Images) {
   Events.get({eventId: $stateParams.eventId}).$promise.then(function (result) {
