@@ -1,7 +1,10 @@
 <ion-view view-title="Events">
-  <ion-content>
-
-  <form name="myForm" method="POST" ng-controller="SearchEventsCtrl">
+  <ion-content class="padding" ng-controller="SearchEventsCtrl">
+    <button class="btn btn-primary" ng-click="search=1">
+      Faire une recherche approfondie
+    </button>
+  
+  <div ng-show="search==1">
     <label for="multipleSelect"> Category: </label><br>
     <select name="category" ng-model="query.category">
       <option value="Musician">Musician</option>
@@ -9,32 +12,37 @@
       <option value="Acrobat">Acrobat</option>
     </select><br>
 
-    <label for="multipleSelect"> Genre: </label><br>
-    <select name="genre" ng-model="query.genre">
-      <option value="Soul">Soul</option>
-      <option value="Pop">Pop</option>
-      <option value="Rock">Rock</option>
-    </select><br>
 
-    <input ng-model="query.latitude">
-    <input ng-model="query.longitude">
-    <input ng-model="query.distance">
-    <input ng-model="query.price">
-
-    
+    <div  class="check-element animate-show" ng-show="query.category=='Musician'">
+        <label for="multipleSelect"> Genre: </label><br>
+      <select name="genre" ng-model="query.genre">
+        <option value="Soul">Soul</option>
+        <option value="Pop">Pop</option>
+        <option value="Rock">Rock</option>
+      </select><br>
+    </div>
+    <br>
+    Maximum price <input ng-model="query.price">
+   <!-- <label>Date: </label>
+    <input type="date" ng-model="query.date">-->
+  
     <input type="button" ng-click="searchevents()" value="Search"/>
-
-    <ion-item ng-init="events"
-               href="#/tab/events/{{event.id}}">
+  </div>
+  
+  
+    <br><br>
+    <ion-item ng-init="events" >
             
           <div>
             <label>Search: <input ng-model="searchText"></label>
           </div>
           <hr>
 
+  <pre>{{query |json}}</pre>
+
           <ion-list id="searchTextResults">
             <ion-item ng-repeat="event in events | filter:searchText"
-                      href="#/tab/events/{{event.id}}">
+                      href="#/event/{{event.id}}">
               <h3>{{event.name}}</h3>
               <h2>{{event.description}}</h2>
               <p>{{event.date}}</p>
@@ -42,7 +50,6 @@
           </ion-list>
       </ion-content>
     </ion-view>
-  </form>
 
   
 

@@ -27,7 +27,7 @@ angular.module('starter.services', ['ngResource'])
 })
 
 .factory('SearchEvents', function ($resource) {
-    return $resource('http://funkevent.herokuapp.com/events/search.json?latitude=:latId&longitude=:lgtId&distance=:distanceId&chp=:chpId&cat=:catId&gnr=:gnrId');
+    return $resource('http://funkevent.herokuapp.com/events/search.json?latitude=:latId&longitude=:lgtId&distance=:distanceId&chp=:chpId&cat=:catId&gnr=:gnrId&date=:date');
 })
 
 
